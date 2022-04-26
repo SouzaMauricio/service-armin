@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "git-commit-msg-linter": "^4.1.2"
+    "git-commit-msg-linter": "^4.1.2",
+    "husky": "^7.0.4"
   },
   "dependencies": {
     "-": "^0.0.1",
