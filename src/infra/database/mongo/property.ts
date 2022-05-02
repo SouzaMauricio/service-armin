@@ -1,7 +1,9 @@
 import { PropertyDAO } from '../../../domain/dao/property'
+import PropertyModel from './mongoose/property'
 
 export class PropertyDAOMongo implements PropertyDAO {
   async create (body: any): Promise<any> {
-    return await new Promise((resolve, reject) => true)
+    const response = await PropertyModel.create(body)
+    return response
   }
 }
