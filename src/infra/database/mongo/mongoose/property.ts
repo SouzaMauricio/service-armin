@@ -28,6 +28,14 @@ interface IRelease {
   ]
 }
 
+interface ICondominium {
+  condominiumValue: number
+  condominiumFacilities: [{
+    facility: string
+    icon: string
+  }]
+}
+
 interface IProperty {
   cod: string
   title: string
@@ -59,6 +67,19 @@ interface IProperty {
     balcony: number[]
   }
   release: IRelease
+  keywords: string[]
+  condominium: ICondominium
+  views: [{
+    count: number
+    date: string
+  }]
+  price: {
+    rent: number
+    sale: number
+  }
+  user: string
+  brokerName: string
+  show: boolean
 }
 
 const releaseSchema = new Schema<IRelease>({
@@ -119,6 +140,27 @@ const releaseSchema = new Schema<IRelease>({
   }
 })
 
+const condominiumSchema = new Schema<ICondominium>({
+  condominiumValue: {
+    type: Number,
+    required: true
+  },
+  condominiumFacilities: {
+    type: [
+      {
+        facility: {
+          type: String,
+          required: true
+        },
+        icon: {
+          type: String,
+          required: true
+        }
+      }
+    ]
+  }
+})
+
 const propertySchema = new Schema<IProperty>({
   cod: {
     type: String,
@@ -138,7 +180,7 @@ const propertySchema = new Schema<IProperty>({
   },
   type: {
     type: String,
-    require: true,
+    required: true,
     enum: Object.values(PROPERTY_VALID_TYPES)
   },
   floor: {
@@ -147,11 +189,11 @@ const propertySchema = new Schema<IProperty>({
   },
   toRent: {
     type: Boolean,
-    require: true
+    required: true
   },
   toSell: {
     type: Boolean,
-    require: true
+    required: true
   },
   propertyArea: {
     type: Number,
@@ -228,6 +270,49 @@ const propertySchema = new Schema<IProperty>({
   release: {
     type: releaseSchema,
     required: function () { return this.type === RELEASE }
+  },
+  keywords: {
+    type: [String],
+    required: true
+  },
+  condominium: {
+    type: condominiumSchema,
+    required: function () { return this.type === APARTMENT || this.type === HOUSE_IN_CONDOMINIUM || this.type === RELEASE }
+  },
+  views: {
+    type: [{
+      count: {
+        type: Number,
+        required: true
+      },
+      date: {
+        type: String,
+        required: true
+      }
+    }],
+    required: false
+  },
+  price: {
+    rent: {
+      type: Number,
+      required: function () { return this.toRent }
+    },
+    sale: {
+      type: Number,
+      required: function () { return this.toSell }
+    }
+  },
+  user: {
+    type: String,
+    required: true
+  },
+  brokerName: {
+    type: String,
+    required: true
+  },
+  show: {
+    type: Boolean,
+    required: true
   }
 }, { timestamps: true })
 

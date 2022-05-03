@@ -1,6 +1,12 @@
 import { RegisterProperty } from '../../application/usecase/RegisterProperty'
 import { MissingParamError } from '../../presentation/error'
 import { PropertyDAOFaker } from '../../infra/database/faker/property'
+import {
+  APARTMENT,
+  PRIVATE_HOUSE,
+  HOUSE_IN_CONDOMINIUM,
+  RELEASE
+} from '../../domain/enums/property-valid-types'
 
 const makeAProperty = (): any => {
   return {
@@ -11,7 +17,7 @@ const makeAProperty = (): any => {
     toSell: true,
     propertyArea: 40,
     landArea: 40,
-    type: 'APARTMENT',
+    type: APARTMENT,
     pictures: [
       {
         uploadId: 'uploadId',
@@ -81,7 +87,7 @@ test('should thow an erro if a APARTMENT type property provider without required
 test('should thow an erro if a PRIVATE_HOUSE type property provider without required field', async () => {
   const propertyDAO = new PropertyDAOFaker()
   const property = makeAProperty()
-  property.type = 'PRIVATE_HOUSE'
+  property.type = PRIVATE_HOUSE
   delete property.landArea
   const registerProperty = new RegisterProperty(propertyDAO)
   const response = await registerProperty.execute(property)
@@ -92,7 +98,7 @@ test('should thow an erro if a PRIVATE_HOUSE type property provider without requ
 test('should thow an erro if a HOUSE_IN_CONDOMINIUM type property provider without required field', async () => {
   const propertyDAO = new PropertyDAOFaker()
   const property = makeAProperty()
-  property.type = 'HOUSE_IN_CONDOMINIUM'
+  property.type = HOUSE_IN_CONDOMINIUM
   delete property.condominium
   const registerProperty = new RegisterProperty(propertyDAO)
   const response = await registerProperty.execute(property)
@@ -103,7 +109,7 @@ test('should thow an erro if a HOUSE_IN_CONDOMINIUM type property provider witho
 test('should thow an erro if a RELEASE type property provider without required field', async () => {
   const propertyDAO = new PropertyDAOFaker()
   const property = makeAProperty()
-  property.type = 'RELEASE'
+  property.type = RELEASE
   delete property.release
   const registerProperty = new RegisterProperty(propertyDAO)
   const response = await registerProperty.execute(property)
