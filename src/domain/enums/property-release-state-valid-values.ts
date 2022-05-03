@@ -1,0 +1,5 @@
+export const NOT_STARTED = 'NOT_STARTED'
+export const STARTED = 'STARTED'
+export const PAUSED = 'PAUSED'
+export const FINISHED = 'FINISHED'
+export enum PROPERTY_RELEASE_STATE_VALID_TYPES { 'NOT_STARTED', 'STARTED', 'PAUSED', 'FINISHED' }
