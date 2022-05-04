@@ -1,5 +1,5 @@
 import { InvalidParamError, MissingParamError } from '../../presentation/error'
-import { ok, badRequest } from '../../presentation/helpers/http-helper'
+import { ok, badRequest, serverError } from '../../presentation/helpers/http-helper'
 import {
   APARTMENT,
   PRIVATE_HOUSE,
@@ -17,13 +17,18 @@ export class RegisterProperty {
   }
 
   async execute (body: any): Promise<HttpResponse> {
-    const verifyBodyPropertiesByType = this.verifyBodyPropertiesByType(body, body.type)
-    if (verifyBodyPropertiesByType) return verifyBodyPropertiesByType
-    const data = await this.propertyDAO.create(body)
-    return ok(data)
+    try {
+      const verifyBodyPropertiesByType = this.verifyBodyPropertiesByType(body, body.type)
+      if (verifyBodyPropertiesByType) return verifyBodyPropertiesByType
+      const data = await this.propertyDAO.create(body)
+      return ok(data)
+    } catch (error) {
+      console.error('Error:', error)
+      return serverError()
+    }
   }
 
-  verifyBodyPropertiesByType (body, type): any {
+  verifyBodyPropertiesByType (body, type): null | HttpResponse {
     switch (type) {
       case APARTMENT:
         return this.validateApartmentTypeProperty(body)
@@ -38,7 +43,7 @@ export class RegisterProperty {
     }
   }
 
-  validateApartmentTypeProperty (body): any {
+  validateApartmentTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
       'floor',
@@ -54,12 +59,13 @@ export class RegisterProperty {
       'environments',
       'pictures'
     ]
+    const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
-      if (body[field]) continue
+      if (keys.includes(field)) continue
       return badRequest(new MissingParamError(field))
     }
-    if (body.toRent && !body.price.rent) return badRequest(new MissingParamError('price.rent'))
-    if (body.toSell && !body.price.sale) return badRequest(new MissingParamError('price.sale'))
+    if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
+    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
     if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.release) badRequest(new InvalidParamError('release'))
@@ -68,7 +74,7 @@ export class RegisterProperty {
     return null
   }
 
-  validatePrivateHouseTypeProperty (body): any {
+  validatePrivateHouseTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
       'propertyArea',
@@ -83,21 +89,23 @@ export class RegisterProperty {
       'environments',
       'pictures'
     ]
+    const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
-      if (body[field]) continue
+      if (keys.includes(field)) continue
       return badRequest(new MissingParamError(field))
     }
-    if (body.toRent && !body.price.rent) return badRequest(new MissingParamError('price.rent'))
-    if (body.toSell && !body.price.sale) return badRequest(new MissingParamError('price.sale'))
+    if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
+    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
     if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
+    if (body.condominium) badRequest(new InvalidParamError('condominium'))
     if (body.release) badRequest(new InvalidParamError('release'))
     if (body.floor) badRequest(new InvalidParamError('floor'))
     if (body.views) badRequest(new InvalidParamError('views'))
     return null
   }
 
-  validateHouseInCondominiumTypeProperty (body): any {
+  validateHouseInCondominiumTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
       'propertyArea',
@@ -113,12 +121,13 @@ export class RegisterProperty {
       'environments',
       'pictures'
     ]
+    const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
-      if (body[field]) continue
+      if (keys.includes(field)) continue
       return badRequest(new MissingParamError(field))
     }
-    if (body.toRent && !body.price.rent) return badRequest(new MissingParamError('price.rent'))
-    if (body.toSell && !body.price.sale) return badRequest(new MissingParamError('price.sale'))
+    if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
+    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
     if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.release) badRequest(new InvalidParamError('release'))
@@ -127,7 +136,7 @@ export class RegisterProperty {
     return null
   }
 
-  validateReleaseTypeProperty (body): any {
+  validateReleaseTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
       'propertyArea',
@@ -142,15 +151,17 @@ export class RegisterProperty {
       'pictures',
       'release'
     ]
+    const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
-      if (body[field]) continue
+      if (keys.includes(field)) continue
       return badRequest(new MissingParamError(field))
     }
-    if (body.toSell && !body.price.sale) return badRequest(new MissingParamError('price.sale'))
+    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
     if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.floor) badRequest(new InvalidParamError('floor'))
     if (body.views) badRequest(new InvalidParamError('views'))
+    if (body.toRent) badRequest(new InvalidParamError('toRent'))
     if (body.price.rent) badRequest(new InvalidParamError('price.rent'))
     return null
   }
