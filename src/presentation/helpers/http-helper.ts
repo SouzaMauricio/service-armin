@@ -1,4 +1,4 @@
-import { ServerError } from '../error'
+import { ServerError, NotFoundError } from '../error'
 import { HttpResponse } from '../protocols/http'
 
 export const badRequest = (error: Error): HttpResponse => ({
@@ -6,9 +6,9 @@ export const badRequest = (error: Error): HttpResponse => ({
   body: error
 })
 
-export const notFound = (error: Error): HttpResponse => ({
+export const notFound = (resource): HttpResponse => ({
   statusCode: 404,
-  body: error
+  body: new NotFoundError(resource)
 })
 
 export const serverError = (): HttpResponse => ({
