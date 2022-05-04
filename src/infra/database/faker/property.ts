@@ -1,4 +1,5 @@
 import { PropertyDAO } from '../../../domain/dao/property'
+import { APARTMENT, PRIVATE_HOUSE, HOUSE_IN_CONDOMINIUM, RELEASE } from '../../../domain/enums/property-valid-types'
 
 export class PropertyDAOFaker implements PropertyDAO {
   async create (body: any): Promise<any> {
@@ -16,6 +17,28 @@ export class PropertyDAOFaker implements PropertyDAO {
         }))
       default:
         return await new Promise((resolve, reject) => resolve(null))
+    }
+  }
+
+  async getPropertyTypeByCod (propertyCod: string): Promise<string | null> {
+    switch (propertyCod) {
+      case 'COD1':
+        return await new Promise((resolve, reject) => resolve(APARTMENT))
+      case 'COD2':
+        return await new Promise((resolve, reject) => resolve(PRIVATE_HOUSE))
+      case 'COD3':
+        return await new Promise((resolve, reject) => resolve(HOUSE_IN_CONDOMINIUM))
+      case 'COD4':
+        return await new Promise((resolve, reject) => resolve(RELEASE))
+      default:
+        return await new Promise((resolve, reject) => resolve(null))
+    }
+  }
+
+  async updateOneByCod (propertyCod: string, body: any): Promise<any | null> {
+    switch (propertyCod) {
+      case 'COD1':
+        return await new Promise((resolve, reject) => resolve({ cod: propertyCod }))
     }
   }
 }
