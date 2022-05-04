@@ -15,7 +15,7 @@ test('shoul return a not found error when return null', async () => {
   const getOneProperty = new GetOneProperty(new PropertyDAOFaker())
   const response = await getOneProperty.execute(propertyCod)
   expect(response.statusCode).toBe(404)
-  expect(response.body).toEqual(new NotFoundError('cod'))
+  expect(response.body).toEqual(new NotFoundError('Property'))
 })
 
 test('should call propertyDAO.findByCod', async () => {

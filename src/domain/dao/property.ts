@@ -1,6 +1,6 @@
-import { HttpResponse } from '../../presentation/protocols'
-
 export interface PropertyDAO {
-  create: (body: any) => Promise<HttpResponse>
-  findByCod: (propertyCod: string) => Promise<HttpResponse>
+  create: (body: any) => Promise<any>
+  findByCod: (propertyCod: string) => Promise<any>
+  getPropertyTypeByCod: (propertyCod: string) => Promise<string | null>
+  updateOneByCod: (propertyCod: string, body: any) => Promise<any | null>
 }
