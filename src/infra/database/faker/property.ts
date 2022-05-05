@@ -41,4 +41,29 @@ export class PropertyDAOFaker implements PropertyDAO {
         return await new Promise((resolve, reject) => resolve({ cod: propertyCod }))
     }
   }
+
+  async find (query: any, page: number): Promise<any | []> {
+    return [
+      {
+        cod: 'COD1',
+        toRent: true,
+        toSell: true
+      },
+      {
+        cod: 'COD2',
+        toRent: true,
+        toSell: true
+      },
+      {
+        cod: 'COD3',
+        toRent: false,
+        toSell: true
+      },
+      {
+        cod: 'COD4',
+        toRent: false,
+        toSell: true
+      }
+    ]
+  }
 }
