@@ -1,13 +1,13 @@
-import { PropertyDAO } from '../../domain/dao/property'
+import { IPropertyDAO } from '../../domain/dao/IProperty'
 import { APARTMENT, HOUSE_IN_CONDOMINIUM, PRIVATE_HOUSE, RELEASE } from '../../domain/enums/property-valid-types'
 import { InvalidParamError } from '../../presentation/error/invalid-param-error'
 import { badRequest, notFound, ok, serverError } from '../../presentation/helpers/http-helper'
 import { HttpResponse } from '../../presentation/protocols'
 
 export class UpdateProperty {
-  readonly propertyDAO: PropertyDAO
+  readonly propertyDAO: IPropertyDAO
 
-  constructor (propertyDAO: PropertyDAO) {
+  constructor (propertyDAO: IPropertyDAO) {
     this.propertyDAO = propertyDAO
   }
 

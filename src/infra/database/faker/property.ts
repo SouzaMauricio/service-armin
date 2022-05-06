@@ -1,7 +1,7 @@
-import { PropertyDAO } from '../../../domain/dao/property'
+import { IPropertyDAO } from '../../../domain/dao/IProperty'
 import { APARTMENT, PRIVATE_HOUSE, HOUSE_IN_CONDOMINIUM, RELEASE } from '../../../domain/enums/property-valid-types'
 
-export class PropertyDAOFaker implements PropertyDAO {
+export class PropertyDAOFaker implements IPropertyDAO {
   async create (body: any): Promise<any> {
     body.cod = 'NEW'
     body.id = '1234'
@@ -13,6 +13,18 @@ export class PropertyDAOFaker implements PropertyDAO {
       case 'COD1':
         return await new Promise((resolve, reject) => resolve({
           cod: 'COD1',
+          title: 'Property 1'
+        }))
+      default:
+        return await new Promise((resolve, reject) => resolve(null))
+    }
+  }
+
+  async findById (propertyCod: string): Promise<any> {
+    switch (propertyCod) {
+      case '1':
+        return await new Promise((resolve, reject) => resolve({
+          cod: '1',
           title: 'Property 1'
         }))
       default:

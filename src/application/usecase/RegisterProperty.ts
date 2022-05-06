@@ -7,12 +7,12 @@ import {
   RELEASE
 } from '../../domain/enums/property-valid-types'
 import { HttpResponse } from '../../presentation/protocols'
-import { PropertyDAO } from '../../domain/dao/property'
+import { IPropertyDAO } from '../../domain/dao/IProperty'
 
 export class RegisterProperty {
-  propertyDAO: PropertyDAO
+  propertyDAO: IPropertyDAO
 
-  constructor (propertyDAO: PropertyDAO) {
+  constructor (propertyDAO: IPropertyDAO) {
     this.propertyDAO = propertyDAO
   }
 
