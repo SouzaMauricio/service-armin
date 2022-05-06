@@ -1,7 +1,7 @@
 import { MakeAContact } from '../../application/usecase/MakeAContact'
 import { ContactDAOFaker } from '../../infra/database/faker/contact'
 import { SendEmailGatewayFaker } from '../../infra/gateway/SendEmailGatewayFaker'
-import { PropertyRepositoryFaker } from '../../infra/repositories/PropertyFaker'
+import { PropertyRepositoryFaker } from '../../infra/repositories/faker/PropertyFaker'
 import { EmailTemplateContact } from '../../application/services/EmailTemplateContact'
 import { PropertyDAOFaker } from '../../infra/database/faker/property'
 
