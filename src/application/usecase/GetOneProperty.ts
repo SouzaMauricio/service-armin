@@ -1,11 +1,11 @@
-import { PropertyDAO } from '../../domain/dao/property'
+import { IPropertyDAO } from '../../domain/dao/IProperty'
 import { notFound, ok, serverError } from '../../presentation/helpers/http-helper'
 import { HttpResponse } from '../../presentation/protocols'
 
 export class GetOneProperty {
-  readonly propertyDAO: PropertyDAO
+  readonly propertyDAO: IPropertyDAO
 
-  constructor (propertyDAO: PropertyDAO) {
+  constructor (propertyDAO: IPropertyDAO) {
     this.propertyDAO = propertyDAO
   }
 

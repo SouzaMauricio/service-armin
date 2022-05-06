@@ -1,4 +1,4 @@
-import { PropertyDAO } from '../../../domain/dao/property'
+import { PropertyDAO } from '../../../domain/dao/IProperty'
 import PropertyModel from './mongoose/property'
 
 export class PropertyDAOMongo implements PropertyDAO {
