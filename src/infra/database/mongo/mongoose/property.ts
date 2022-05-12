@@ -39,7 +39,7 @@ interface ICondominium {
 interface IProperty {
   cod: string
   title: string
-  subtitle: string
+  subtitle?: string
   description: string
   type: 'APARTMENT' | 'PRIVATE_HOUSE' | 'HOUSE_IN_CONDOMINIUM' | 'RELEASE'
   floor: number
@@ -51,7 +51,7 @@ interface IProperty {
   localization: {
     street: string
     number: number
-    complement: string
+    complement?: string
     neighborhood: string
     city: string
     state: string
@@ -164,7 +164,8 @@ const condominiumSchema = new Schema<ICondominium>({
 const propertySchema = new Schema<IProperty>({
   cod: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   title: {
     type: String,
@@ -172,7 +173,7 @@ const propertySchema = new Schema<IProperty>({
   },
   subtitle: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String,
@@ -218,7 +219,7 @@ const propertySchema = new Schema<IProperty>({
     },
     complement: {
       type: String,
-      required: true
+      required: false
     },
     neighborhood: {
       type: String,
