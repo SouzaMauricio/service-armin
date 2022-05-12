@@ -77,11 +77,11 @@ test('should register a new apartment type property ', async () => {
 test('should thow an erro if a APARTMENT type property provider without required field', async () => {
   const propertyDAO = new PropertyDAOFaker()
   const property = makeAProperty()
-  delete property.floor
+  delete property.propertyArea
   const registerProperty = new RegisterProperty(propertyDAO)
   const response = await registerProperty.execute(property)
   expect(response.statusCode).toBe(400)
-  expect(response.body).toEqual(new MissingParamError('floor'))
+  expect(response.body).toEqual(new MissingParamError('propertyArea'))
 })
 
 test('should thow an erro if a PRIVATE_HOUSE type property provider without required field', async () => {
@@ -125,3 +125,20 @@ test('should call a DAO to register a new property', async () => {
   await registerProperty.execute(property)
   expect(propertyFakerSpy).toBeCalled()
 })
+
+test('should add cod in body', async () => {
+  const propertyDAO = new PropertyDAOFaker()
+  const property = makeAProperty()
+  const registerProperty = new RegisterProperty(propertyDAO)
+  await registerProperty.execute(property)
+  expect(property).toHaveProperty('cod')
+})
+
+// test('should call countDAO to add cod', async () => {
+//   const countDAOFaker = new CounDAOFaker()
+//   const countDAOFakerSpy = jest.spyOn(countDAOFaker, 'incrementCod')
+//   const property = makeAProperty()
+//   const registerProperty = new RegisterProperty(new PropertyDAOFaker(), countDAOFaker)
+//   await registerProperty.execute(property)
+//   expect(countDAOFaker).toBeCalled()
+// })
