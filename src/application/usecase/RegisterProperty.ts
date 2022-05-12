@@ -20,12 +20,40 @@ export class RegisterProperty {
     try {
       const verifyBodyPropertiesByType = this.verifyBodyPropertiesByType(body, body.type)
       if (verifyBodyPropertiesByType) return verifyBodyPropertiesByType
+      body.cod = this.getNextCod(body.type)
       const data = await this.propertyDAO.create(body)
       return ok(data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error: ', error)
       return serverError()
     }
+  }
+
+  private getNextCod (type: string): string {
+    const prefix = this.getPrefixByType(type)
+    const date = this.getDateFormatted()
+    return prefix + date
+  }
+
+  private getPrefixByType (type: string): string {
+    switch (type) {
+      case APARTMENT:
+        return 'AP'
+      case PRIVATE_HOUSE:
+        return 'PP'
+      case HOUSE_IN_CONDOMINIUM:
+        return 'HC'
+      case RELEASE:
+        return 'RL'
+      default:
+        return 'INVALID_'
+    }
+  }
+
+  private getDateFormatted (): string {
+    const currentDate = new Date().toISOString().slice(0, 10)
+    const [year, month] = currentDate.split('-')
+    return year.slice(-2) + month
   }
 
   verifyBodyPropertiesByType (body, type): null | HttpResponse {
@@ -46,7 +74,6 @@ export class RegisterProperty {
   validateApartmentTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
-      'floor',
       'propertyArea',
       'user',
       'toRent',

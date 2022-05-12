@@ -1,0 +1,31 @@
+version: "3.1"
+services:
+  armin_db_mongo:
+    image: mongo:4.4
+    container_name: armin_db_mongo
+    ports:
+      - 27017:27017
+    networks:
+      armin:
+        ipv4_address: 192.168.1.3
+
+  service_armin:
+    build:
+      dockerfile: ./dockerfiles/node.dockerfile
+      context: .
+    image: node:14
+    container_name: servicer_armin
+    ports:
+      - "3003:3003"
+    networks:
+      armin:
+        ipv4_address: 192.168.1.2
+    volumes:
+      - .:/var/www
+
+networks:
+  armin:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
