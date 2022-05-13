@@ -1,9 +1,9 @@
 import { MakeAContact } from '../../application/usecase/MakeAContact'
-import { ContactDAOFaker } from '../../infra/database/faker/contact'
+import { ContactDAOFaker } from '../../infra/database/faker/Contact'
 import { SendEmailGatewayFaker } from '../../infra/gateway/SendEmailGatewayFaker'
 import { PropertyRepositoryFaker } from '../../infra/repositories/faker/PropertyFaker'
 import { EmailTemplateContact } from '../../application/services/EmailTemplateContact'
-import { PropertyDAOFaker } from '../../infra/database/faker/property'
+import { PropertyDAOFaker } from '../../infra/database/faker/Property'
 
 const body = {
   fullName: 'test name',

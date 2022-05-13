@@ -14,7 +14,7 @@ export class PropertyDAOMongo implements IPropertyDAO {
     try {
       await connection.createConnection()
       const response = await PropertyModel.create(body)
-      return response
+      return { id: response._id }
     } catch (error) {
       console.error('Error: ', error)
       throw error
