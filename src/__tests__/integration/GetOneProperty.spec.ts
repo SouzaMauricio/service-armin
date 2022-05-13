@@ -1,5 +1,5 @@
 import { GetOneProperty } from '../../application/usecase/GetOneProperty'
-import { PropertyDAOFaker } from '../../infra/database/faker/property'
+import { PropertyDAOFaker } from '../../infra/database/faker/Property'
 import { NotFoundError } from '../../presentation/error/not-found-error'
 
 test('shoul return one property', async () => {

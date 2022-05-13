@@ -1,4 +1,4 @@
-import { PropertyDAOFaker } from '../../infra/database/faker/property'
+import { PropertyDAOFaker } from '../../infra/database/faker/Property'
 import { UpdateProperty } from '../../application/usecase/UpdateProperty'
 import { InvalidParamError, NotFoundError } from '../../presentation/error'
 
