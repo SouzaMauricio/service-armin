@@ -10,7 +10,6 @@ export class GetAllProperties {
   }
 
   async execute (queryStringParams: any): Promise<HttpResponse> {
-    console.log(queryStringParams)
     try {
       const {
         toRent = null,
