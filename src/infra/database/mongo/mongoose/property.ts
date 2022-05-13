@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Document, PaginateModel } from 'mongoose'
+import paginate from 'mongoose-paginate-v2'
 import {
   APARTMENT,
   PRIVATE_HOUSE,
@@ -36,7 +37,7 @@ interface ICondominium {
   }]
 }
 
-interface IProperty {
+interface IProperty extends Document {
   cod: string
   title: string
   subtitle?: string
@@ -317,6 +318,8 @@ const propertySchema = new Schema<IProperty>({
   }
 }, { timestamps: true })
 
-const Property = model<IProperty>('Property', propertySchema)
+propertySchema.plugin(paginate)
+
+const Property = model<IProperty, PaginateModel<IProperty>>('Property', propertySchema)
 
 export default Property
