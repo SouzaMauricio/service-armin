@@ -1,4 +1,4 @@
-import { PropertyDAOFaker } from '../../infra/database/faker/property'
+import { PropertyDAOFaker } from '../../infra/database/faker/Property'
 import { GetAllProperties } from '../../application/usecase/GetAllProperties'
 
 test('should return a truthy value to get all properties', async () => {
