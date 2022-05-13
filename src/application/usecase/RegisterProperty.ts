@@ -8,31 +8,35 @@ import {
 } from '../../domain/enums/property-valid-types'
 import { HttpResponse } from '../../presentation/protocols'
 import { IPropertyDAO } from '../../domain/dao/IProperty'
+import { ICountDAO } from '../../domain/dao/ICount'
 
 export class RegisterProperty {
   propertyDAO: IPropertyDAO
+  countDAO: ICountDAO
 
-  constructor (propertyDAO: IPropertyDAO) {
+  constructor (propertyDAO: IPropertyDAO, countDAO: ICountDAO) {
     this.propertyDAO = propertyDAO
+    this.countDAO = countDAO
   }
 
   async execute (body: any): Promise<HttpResponse> {
     try {
       const verifyBodyPropertiesByType = this.verifyBodyPropertiesByType(body, body.type)
       if (verifyBodyPropertiesByType) return verifyBodyPropertiesByType
-      body.cod = this.getNextCod(body.type)
+      body.cod = await this.getNextCod(body.type)
       const data = await this.propertyDAO.create(body)
-      return ok(data)
+      return ok({ id: data.id })
     } catch (error) {
       console.error('Error: ', error)
       return serverError()
     }
   }
 
-  private getNextCod (type: string): string {
+  private async getNextCod (type: string): Promise<string> {
     const prefix = this.getPrefixByType(type)
     const date = this.getDateFormatted()
-    return prefix + date
+    const nextCod = await this.countDAO.getNextCod()
+    return prefix + date + nextCod.toString()
   }
 
   private getPrefixByType (type: string): string {
