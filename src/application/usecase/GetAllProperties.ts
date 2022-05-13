@@ -10,9 +10,9 @@ export class GetAllProperties {
   }
 
   async execute (queryStringParams: any): Promise<HttpResponse> {
+    console.log(queryStringParams)
     try {
       const {
-        page = 1,
         toRent = null,
         toSell = null
       } = queryStringParams
@@ -23,7 +23,7 @@ export class GetAllProperties {
       if (toSell && toSell === 'true') {
         query.toSell = true
       }
-      const response = await this.propertyDAO.find(query, page)
+      const response = await this.propertyDAO.find(query, queryStringParams)
       return ok(response)
     } catch (error) {
       console.error('Error:', error)
