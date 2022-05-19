@@ -1,8 +1,8 @@
 import { SendEmailInput } from '../../application/dto/SendEmailInput'
 import { IPropertyDAO } from '../../domain/dao/IProperty'
-import { EmailTemplate } from '../../domain/services/EmailTemplate'
+import { IEmailTemplate } from '../../domain/services/IEmailTemplate'
 
-export class EmailTemplateContact implements EmailTemplate {
+export class EmailTemplateContact implements IEmailTemplate {
   propertyDAO: IPropertyDAO
 
   constructor (propertyDAO: IPropertyDAO) {

@@ -1,3 +1,3 @@
-export class ICountDAO {
+export interface ICountDAO {
   getNextCod: () => Promise<number>
 }
