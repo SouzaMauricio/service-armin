@@ -3,15 +3,15 @@ import { ok, serverError } from '../../presentation/helpers/http-helper'
 import { HttpResponse } from '../../presentation/protocols'
 import { ISendEmail } from '../../domain/infra/gateway/ISendEmail'
 import { IPropertyRepository } from '../../domain/infra/repositories/IProperty'
-import { EmailTemplate } from '../../domain/services/EmailTemplate'
+import { IEmailTemplate } from '../../domain/services/IEmailTemplate'
 
 export class MakeAContact {
   contactDAO: IContactDAO
   sendEmailGateway: ISendEmail
   propertyRepository: IPropertyRepository
-  emailTemplate: EmailTemplate
+  emailTemplate: IEmailTemplate
 
-  constructor (contactDAO: IContactDAO, propertyRepository: IPropertyRepository, sendEmailGateway: ISendEmail, emailTemplate: EmailTemplate) {
+  constructor (contactDAO: IContactDAO, propertyRepository: IPropertyRepository, sendEmailGateway: ISendEmail, emailTemplate: IEmailTemplate) {
     this.contactDAO = contactDAO
     this.sendEmailGateway = sendEmailGateway
     this.propertyRepository = propertyRepository

@@ -29,6 +29,7 @@ routes.route('/property/:cod')
     const response = await getOnePropertyController.handler(req.params.cod)
     res.send(response)
   })
+
 export {
   routes
 }
