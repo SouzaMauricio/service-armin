@@ -25,6 +25,6 @@ export class AuthenticateUser {
       id: user.id,
       email: user.email
     })
-    return ok(token)
+    return ok({ token })
   }
 }

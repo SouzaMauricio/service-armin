@@ -13,4 +13,15 @@ export class TokenManagerService implements ITokenManagerService {
     })
     return token
   }
+
+  async verifyToken (token: string): Promise<any | boolean> {
+    try {
+      if (!token) return false
+      const isValidToken = await jwt.verify(token, process.env.SECRET_TOKEN)
+      return isValidToken
+    } catch (error) {
+      console.error('Error: ', error)
+      return false
+    }
+  }
 }

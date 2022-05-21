@@ -5,4 +5,5 @@ interface IPayloadUser {
 
 export interface ITokenManagerService {
   createAccessToken: (body: IPayloadUser) => string
+  verifyToken: (token: string) => any
 }
