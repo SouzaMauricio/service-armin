@@ -1,6 +1,6 @@
-import { IContactDAO } from '../../../domain/dao/IContact'
+import { IContactUsDAO } from '../../../domain/dao/IContactUs'
 
-export class ContactDAOFaker implements IContactDAO {
+export class ContactUsDAOFaker implements IContactUsDAO {
   async find (query: any, page: number): Promise<any | []> {
     return [
       {
