@@ -4,10 +4,10 @@ import { AuthenticateUserController } from '../presentation/controllers/Authenti
 const routes = express()
 
 routes.route('/login')
-  .post(async (req: Request, res: Response, next) => {
+  .post(async (req: Request, res: Response, next: any) => {
     const authenticateUserController = new AuthenticateUserController()
     const response = await authenticateUserController.handler(req.body)
-    res.send(response)
+    res.status(response.statusCode).send(response.body)
   })
 
 export {
