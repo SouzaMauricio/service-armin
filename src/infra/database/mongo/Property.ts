@@ -24,7 +24,19 @@ export class PropertyDAOMongo implements IPropertyDAO {
     }
   }
 
-  findById: (propertyCod: string) => Promise<any>
+  async findById (propertyId: string): Promise<any> {
+    const connection = new Connection()
+    try {
+      await connection.createConnection()
+      const response = await PropertyModel.findById(propertyId)
+      return response
+    } catch (error) {
+      console.error('Error: ', error)
+      throw error
+    } finally {
+      await connection.closeConnection()
+    }
+  }
 
   async getPropertyTypeByCod (propertyCod: string): Promise<string | null> {
     const connection = new Connection()

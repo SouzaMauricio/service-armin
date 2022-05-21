@@ -1,5 +1,5 @@
 import { IContactDAO } from '../../domain/dao/IContact'
-import { ok, serverError } from '../../presentation/helpers/http-helper'
+import { notFound, ok, serverError } from '../../presentation/helpers/http-helper'
 import { HttpResponse } from '../../presentation/protocols'
 import { ISendEmail } from '../../domain/infra/gateway/ISendEmail'
 import { IPropertyRepository } from '../../domain/infra/repositories/IProperty'
@@ -20,8 +20,9 @@ export class MakeAContact {
 
   async execute (body: any): Promise<HttpResponse> {
     try {
-      const contact = this.contactDAO.create(body)
+      const contact = await this.contactDAO.create(body)
       const emailUser = await this.propertyRepository.getUserEmailByPropertyId(body.propertyId)
+      if (!emailUser) return notFound('Property')
       const templateEmail = await this.emailTemplate.getTemplate(emailUser, body)
       await this.sendEmailGateway.send(templateEmail)
       return ok(contact)

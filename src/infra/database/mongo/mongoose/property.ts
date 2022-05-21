@@ -1,4 +1,4 @@
-import { Schema, model, Document, PaginateModel } from 'mongoose'
+import { Schema, model, Document, PaginateModel, Types } from 'mongoose'
 import paginate from 'mongoose-paginate-v2'
 import {
   APARTMENT,
@@ -8,6 +8,7 @@ import {
   PROPERTY_VALID_TYPES
 } from '../../../../domain/enums/property-valid-types'
 import { PROPERTY_RELEASE_STATE_VALID_TYPES } from '../../../../domain/enums/property-release-state-valid-values'
+import UserModel from './user'
 
 interface IRelease {
   state: 'NOT_STARTED' | 'STARTED' | 'PAUSED' | 'FINISHED'
@@ -78,7 +79,7 @@ interface IProperty extends Document {
     rent: number
     sale: number
   }
-  user: string
+  user: any
   brokerName: string
   show: boolean
 }
@@ -305,7 +306,8 @@ const propertySchema = new Schema<IProperty>({
     }
   },
   user: {
-    type: String,
+    type: Types.ObjectId,
+    ref: UserModel,
     required: true
   },
   brokerName: {

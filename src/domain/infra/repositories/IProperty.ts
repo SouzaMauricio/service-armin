@@ -1,3 +1,3 @@
 export class IPropertyRepository {
-  getUserEmailByPropertyId: (propertyId: string) => Promise<string>
+  getUserEmailByPropertyId: (propertyId: string) => Promise<string | null>
 }
