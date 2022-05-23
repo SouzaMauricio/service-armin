@@ -7,11 +7,11 @@ interface ISendEmailInput {
 }
 
 export class SendEmailInput {
-  readonly to: string[]
-  readonly cc?: string[]
-  readonly cco?: string[]
-  readonly subject: string
-  readonly body: string
+  to: string[]
+  cc?: string[]
+  cco?: string[]
+  subject: string
+  body: string
 
   constructor (body: ISendEmailInput) {
     this.to = body.to

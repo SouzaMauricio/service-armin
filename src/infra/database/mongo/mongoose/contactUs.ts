@@ -1,5 +1,6 @@
 import { Schema, model, Document, PaginateModel } from 'mongoose'
 import { MEANS_OF_CONTACT_VALID_VALUES } from '../../../../domain/enums/means-of-contact-valid-values'
+import { CONTACT_US_TYPES_VALID_VALUES } from '../../../../domain/enums/contact-us-types-valid-values'
 import paginate from 'mongoose-paginate-v2'
 
 interface IContactUs extends Document {
@@ -8,6 +9,7 @@ interface IContactUs extends Document {
   contact: string
   meanOfContact: 'EMAIL' | 'WHATSAPP' | 'CALL'
   description: string
+  type: 'SELL_MY_PROPERTY' | 'RENT_MY_PROPERTY' | 'PARTNERSHIPS'| 'OTHERS'
 }
 
 const contactUsSchema = new Schema<IContactUs>({
@@ -30,6 +32,11 @@ const contactUsSchema = new Schema<IContactUs>({
   },
   description: {
     type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    enum: CONTACT_US_TYPES_VALID_VALUES,
     required: true
   }
 }, { timestamps: true })
