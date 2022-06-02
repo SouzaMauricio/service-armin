@@ -21,7 +21,7 @@ export class MakeAContact {
   async execute (body: any): Promise<HttpResponse> {
     try {
       const contact = await this.contactDAO.create(body)
-      const emailUser = await this.propertyRepository.getUserEmailByPropertyId(body.propertyId)
+      const emailUser = await this.propertyRepository.getUserEmailByPropertyId(body.property)
       if (!emailUser) return notFound('Property')
       const templateEmail = await this.emailTemplate.getTemplate(emailUser, body)
       await this.sendEmailGateway.send(templateEmail)

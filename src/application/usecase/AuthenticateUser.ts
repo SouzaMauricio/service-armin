@@ -25,6 +25,12 @@ export class AuthenticateUser {
       id: user.id,
       email: user.email
     })
-    return ok({ token })
+    const formattedUser = {
+      name: `${user.name} ${user.lastName}`,
+      email: user.email,
+      image: user.image,
+      permissions: user.permissions
+    }
+    return ok({ token, user: formattedUser })
   }
 }

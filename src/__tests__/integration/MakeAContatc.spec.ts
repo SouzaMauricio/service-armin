@@ -9,7 +9,7 @@ const body = {
   fullName: 'test name',
   email: 'email@faker.com',
   contact: '00000000000',
-  propertyId: '1',
+  property: '1',
   meansOfContact: ['EMAIL', 'WHATSAPP']
 }
 

@@ -31,8 +31,9 @@ interface IRelease {
 }
 
 interface ICondominium {
-  condominiumValue: number
-  condominiumFacilities: [{
+  price: number
+  name: string
+  facilities: [{
     facility: string
     icon: string
   }]
@@ -131,7 +132,7 @@ const releaseSchema = new Schema<IRelease>({
               type: String,
               required: true
             },
-            image: {
+            fullPath: {
               type: String,
               require: true
             }
@@ -143,11 +144,15 @@ const releaseSchema = new Schema<IRelease>({
 })
 
 const condominiumSchema = new Schema<ICondominium>({
-  condominiumValue: {
+  price: {
     type: Number,
     required: true
   },
-  condominiumFacilities: {
+  name: {
+    type: String,
+    required: true
+  },
+  facilities: {
     type: [
       {
         facility: {
@@ -308,10 +313,6 @@ const propertySchema = new Schema<IProperty>({
   user: {
     type: Types.ObjectId,
     ref: UserModel,
-    required: true
-  },
-  brokerName: {
-    type: String,
     required: true
   },
   show: {

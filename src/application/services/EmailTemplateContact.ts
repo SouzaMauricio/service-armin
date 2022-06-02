@@ -29,7 +29,7 @@ export class EmailTemplateContact implements IEmailTemplate {
   }
 
   async getTemplate (emailToSend: string, body: any): Promise<SendEmailInput> {
-    const property = await this.propertyDAO!.findById(body.propertyId)
+    const property = await this.propertyDAO!.findById(body.property)
     const subject = `Sua propriedade '${String(property.title)}' tem um novo interessado!!`
     const bodyTemplate = 'Informações de contato:\n\n' +
       `Nome: ${String(body.fullName)}\n` +

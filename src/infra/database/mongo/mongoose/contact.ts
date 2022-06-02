@@ -1,12 +1,13 @@
 import { Schema, model, Document, PaginateModel } from 'mongoose'
 import { MEANS_OF_CONTACT_VALID_VALUES } from '../../../../domain/enums/means-of-contact-valid-values'
+import Property from './property'
 import paginate from 'mongoose-paginate-v2'
 
 interface IContact extends Document {
   fullName: string
   email: string
   contact: string
-  propertyId: string
+  property: string
   meanOfContact: 'EMAIL' | 'WHATSAPP' | 'CALL'
 }
 
@@ -23,9 +24,10 @@ const contactSchema = new Schema<IContact>({
     type: String,
     required: true
   },
-  propertyId: {
+  property: {
     type: String,
-    required: true
+    required: true,
+    ref: Property
   },
   meanOfContact: {
     type: String,

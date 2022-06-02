@@ -4,13 +4,15 @@ export class OptionsPaginate {
       page = 1,
       limit = 10,
       sort = '-createdAt',
-      select
+      select = '',
+      populate = ''
     } = options
 
     return {
       page,
       limit,
       sort,
+      populate,
       select
     }
   }

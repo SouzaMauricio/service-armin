@@ -82,7 +82,6 @@ export class RegisterProperty {
       'user',
       'toRent',
       'toSell',
-      'brokerName',
       'show',
       'condominium',
       'price',
@@ -113,7 +112,6 @@ export class RegisterProperty {
       'user',
       'toRent',
       'toSell',
-      'brokerName',
       'show',
       'price',
       'localization',
@@ -144,7 +142,6 @@ export class RegisterProperty {
       'user',
       'toRent',
       'toSell',
-      'brokerName',
       'show',
       'condominium',
       'price',
@@ -173,7 +170,6 @@ export class RegisterProperty {
       'propertyArea',
       'user',
       'toSell',
-      'brokerName',
       'show',
       'condominium',
       'price',
@@ -192,6 +188,7 @@ export class RegisterProperty {
     // invalid fields
     if (body.floor) badRequest(new InvalidParamError('floor'))
     if (body.views) badRequest(new InvalidParamError('views'))
+    if (body.landArea) badRequest(new InvalidParamError('views'))
     if (body.toRent) badRequest(new InvalidParamError('toRent'))
     if (body.price.rent) badRequest(new InvalidParamError('price.rent'))
     return null
