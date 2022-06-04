@@ -78,4 +78,6 @@ export class PropertyDAOFaker implements IPropertyDAO {
       }
     ]
   }
+
+  async pushNewPicture (propertyId: string, body: any): Promise<void> {}
 }

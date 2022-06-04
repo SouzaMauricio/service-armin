@@ -5,4 +5,5 @@ export interface IPropertyDAO {
   getPropertyTypeByCod: (propertyCod: string) => Promise<string | null>
   updateOneByCod: (propertyCod: string, body: any) => Promise<any | null>
   find: (query: any, queryStringParams) => Promise<any | []>
+  pushNewPicture: (propertyId: string, body: any) => Promise<void>
 }

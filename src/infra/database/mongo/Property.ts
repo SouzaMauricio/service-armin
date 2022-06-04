@@ -96,4 +96,20 @@ export class PropertyDAOMongo implements IPropertyDAO {
       await connection.closeConnection()
     }
   }
+
+  async pushNewPicture (propertyId: string, body: any): Promise<void> {
+    const connection = new Connection()
+    try {
+      await connection.createConnection()
+      await PropertyModel.updateOne(
+        { _id: propertyId },
+        { $push: { pictures: body } }
+      )
+    } catch (error) {
+      console.error('Error: ', error)
+      throw error
+    } finally {
+      await connection.closeConnection()
+    }
+  }
 }

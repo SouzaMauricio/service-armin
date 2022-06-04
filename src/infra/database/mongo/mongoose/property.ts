@@ -22,7 +22,7 @@ interface IRelease {
       garages: number[]
       suites: number[]
       bathrooms: number[]
-      images: [{
+      images?: [{
         uploadId: string
         image: string
       }]
@@ -45,15 +45,15 @@ interface IProperty extends Document {
   subtitle?: string
   description: string
   type: 'APARTMENT' | 'PRIVATE_HOUSE' | 'HOUSE_IN_CONDOMINIUM' | 'RELEASE'
-  floor: number
+  floor?: number
   toRent: boolean
   toSell: boolean
   propertyArea: number
   landArea: number
-  pictures: object[]
+  pictures?: object[]
   localization: {
     street: string
-    number: number
+    number: string
     complement?: string
     neighborhood: string
     city: string
@@ -193,7 +193,7 @@ const propertySchema = new Schema<IProperty>({
   },
   floor: {
     type: Number,
-    required: function () { return this.type === APARTMENT }
+    required: false
   },
   toRent: {
     type: Boolean,
@@ -213,7 +213,7 @@ const propertySchema = new Schema<IProperty>({
   },
   pictures: {
     type: [Object],
-    required: true
+    required: false
   },
   localization: {
     street: {
@@ -221,7 +221,7 @@ const propertySchema = new Schema<IProperty>({
       required: true
     },
     number: {
-      type: Number,
+      type: String,
       required: true
     },
     complement: {
