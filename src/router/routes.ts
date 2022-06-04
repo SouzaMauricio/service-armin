@@ -4,6 +4,7 @@ import * as Property from './property'
 import * as Login from './login'
 import * as Contact from './contact'
 import * as ContactUs from './contactUs'
+import * as Upload from './upload'
 import cors from 'cors'
 
 const whitelist = process.env.WHITE_LIST!.toString().split(',')
@@ -22,12 +23,13 @@ const routes = express()
 
 routes.use(cors(corsOptions))
 routes.use(bodyParser.urlencoded({ extended: false }))
-routes.use(bodyParser.json())
+routes.use(bodyParser.json({ limit: '20mb' }))
 
 routes.use(Property.routes)
 routes.use(Login.routes)
 routes.use(Contact.routes)
 routes.use(ContactUs.routes)
+routes.use(Upload.routes)
 
 export {
   routes
