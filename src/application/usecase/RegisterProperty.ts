@@ -86,8 +86,7 @@ export class RegisterProperty {
       'condominium',
       'price',
       'localization',
-      'environments',
-      'pictures'
+      'environments'
     ]
     const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
@@ -96,7 +95,6 @@ export class RegisterProperty {
     }
     if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
     if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
-    if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.release) badRequest(new InvalidParamError('release'))
     if (body.landArea) badRequest(new InvalidParamError('landArea'))
@@ -115,8 +113,7 @@ export class RegisterProperty {
       'show',
       'price',
       'localization',
-      'environments',
-      'pictures'
+      'environments'
     ]
     const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
@@ -125,7 +122,6 @@ export class RegisterProperty {
     }
     if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
     if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
-    if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.condominium) badRequest(new InvalidParamError('condominium'))
     if (body.release) badRequest(new InvalidParamError('release'))
@@ -146,8 +142,7 @@ export class RegisterProperty {
       'condominium',
       'price',
       'localization',
-      'environments',
-      'pictures'
+      'environments'
     ]
     const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
@@ -156,7 +151,6 @@ export class RegisterProperty {
     }
     if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new MissingParamError('price.rent'))
     if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
-    if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.release) badRequest(new InvalidParamError('release'))
     if (body.floor) badRequest(new InvalidParamError('floor'))
@@ -175,8 +169,7 @@ export class RegisterProperty {
       'price',
       'localization',
       'environments',
-      'pictures',
-      'release'
+      'pictures'
     ]
     const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
@@ -184,7 +177,6 @@ export class RegisterProperty {
       return badRequest(new MissingParamError(field))
     }
     if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
-    if (!body.pictures[0]) return badRequest(new MissingParamError('picture'))
     // invalid fields
     if (body.floor) badRequest(new InvalidParamError('floor'))
     if (body.views) badRequest(new InvalidParamError('views'))
