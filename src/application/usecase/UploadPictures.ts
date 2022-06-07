@@ -18,10 +18,11 @@ export class UploadPictures {
   async execute (body: any): Promise<HttpResponse> {
     try {
       const newFileName = this.getNewFileName(body.fileType, body.propertyId)
-      const path = await this.filesServerGateway.uploadPropertyPictureFile(body, newFileName)
+      const { path, key } = await this.filesServerGateway.uploadPropertyPictureFile(body, newFileName)
       const newUpload = {
         originalName: body.fileName,
-        fullPath: path
+        fullPath: path,
+        key
       }
       const upload = await this.uploadDAO.create(newUpload)
       await this.propertyDAO.pushNewPicture(
