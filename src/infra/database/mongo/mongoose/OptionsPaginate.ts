@@ -7,13 +7,13 @@ export class OptionsPaginate {
       select = '',
       populate = ''
     } = options
-
+    const selectSplitted = select.split(',').join(' ')
     return {
       page,
       limit,
       sort,
       populate,
-      select
+      select: selectSplitted
     }
   }
 }

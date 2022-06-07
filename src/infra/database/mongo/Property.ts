@@ -112,4 +112,20 @@ export class PropertyDAOMongo implements IPropertyDAO {
       await connection.closeConnection()
     }
   }
+
+  async removePicture (propertyId: string, uploadId: string): Promise<void> {
+    const connection = new Connection()
+    try {
+      await connection.createConnection()
+      await PropertyModel.updateOne(
+        { _id: propertyId },
+        { $pull: { pictures: { uploadId } } }
+      )
+    } catch (error) {
+      console.error('Error: ', error)
+      throw error
+    } finally {
+      await connection.closeConnection()
+    }
+  }
 }

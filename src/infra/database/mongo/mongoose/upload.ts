@@ -4,6 +4,7 @@ import paginate from 'mongoose-paginate-v2'
 interface IUpload extends Document {
   fullPath: string
   originalName: string
+  key: string
 }
 
 const uploadSchema = new Schema<IUpload>({
@@ -12,6 +13,10 @@ const uploadSchema = new Schema<IUpload>({
     required: true
   },
   originalName: {
+    type: String,
+    required: true
+  },
+  key: {
     type: String,
     required: true
   }

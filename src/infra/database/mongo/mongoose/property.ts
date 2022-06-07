@@ -1,15 +1,16 @@
-import { Schema, model, Document, PaginateModel, Types } from 'mongoose'
+import { Document, model, PaginateModel, Schema, Types } from 'mongoose'
 import paginate from 'mongoose-paginate-v2'
-import {
-  APARTMENT,
-  PRIVATE_HOUSE,
-  HOUSE_IN_CONDOMINIUM,
-  RELEASE,
-  PROPERTY_VALID_TYPES
-} from '../../../../domain/enums/property-valid-types'
 import { PROPERTY_RELEASE_STATE_VALID_TYPES } from '../../../../domain/enums/property-release-state-valid-values'
+import {
+  APARTMENT, HOUSE_IN_CONDOMINIUM, PRIVATE_HOUSE, PROPERTY_VALID_TYPES, RELEASE
+} from '../../../../domain/enums/property-valid-types'
 import UserModel from './user'
 
+interface INearby {
+  title: string
+  icon: string
+  distance: number
+}
 interface IRelease {
   state: 'NOT_STARTED' | 'STARTED' | 'PAUSED' | 'FINISHED'
   expectedDate: string
@@ -49,7 +50,7 @@ interface IProperty extends Document {
   toRent: boolean
   toSell: boolean
   propertyArea: number
-  landArea: number
+  landArea?: number
   pictures?: object[]
   localization: {
     street: string
@@ -83,6 +84,7 @@ interface IProperty extends Document {
   user: any
   brokerName: string
   show: boolean
+  nearby: INearby[]
 }
 
 const releaseSchema = new Schema<IRelease>({
@@ -168,6 +170,21 @@ const condominiumSchema = new Schema<ICondominium>({
   }
 })
 
+const nearbySchema = new Schema<INearby>({
+  title: {
+    type: String,
+    required: true
+  },
+  distance: {
+    type: Number,
+    required: true
+  },
+  icon: {
+    type: String,
+    required: true
+  }
+})
+
 const propertySchema = new Schema<IProperty>({
   cod: {
     type: String,
@@ -205,7 +222,7 @@ const propertySchema = new Schema<IProperty>({
   },
   propertyArea: {
     type: Number,
-    required: true
+    required: function () { return this.type !== RELEASE }
   },
   landArea: {
     type: Number,
@@ -248,31 +265,31 @@ const propertySchema = new Schema<IProperty>({
   environments: {
     bedroom: {
       type: [Number],
-      required: true
+      required: function () { return this.type !== RELEASE }
     },
     bathrooms: {
       type: [Number],
-      required: true
+      required: function () { return this.type !== RELEASE }
     },
     suites: {
       type: [Number],
-      required: true
+      required: false
     },
     kitchen: {
       type: [Number],
-      required: true
+      required: false
     },
     garages: {
       type: [Number],
-      required: true
+      required: false
     },
     livingroom: {
       type: [Number],
-      required: true
+      required: false
     },
     balcony: {
       type: [Number],
-      required: true
+      required: false
     }
   },
   release: {
@@ -318,6 +335,10 @@ const propertySchema = new Schema<IProperty>({
   show: {
     type: Boolean,
     required: true
+  },
+  nearby: {
+    type: [nearbySchema],
+    required: false
   }
 }, { timestamps: true })
 

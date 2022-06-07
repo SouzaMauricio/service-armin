@@ -80,4 +80,5 @@ export class PropertyDAOFaker implements IPropertyDAO {
   }
 
   async pushNewPicture (propertyId: string, body: any): Promise<void> {}
+  async removePicture (propertyId: string, uploadId: string): Promise<void> {}
 }

@@ -9,7 +9,7 @@ interface IContactUs extends Document {
   contact: string
   meanOfContact: 'EMAIL' | 'WHATSAPP' | 'CALL'
   description: string
-  type: 'SELL_MY_PROPERTY' | 'RENT_MY_PROPERTY' | 'PARTNERSHIPS'| 'OTHERS'
+  type: 'SELL_MY_PROPERTY' | 'RENT_MY_PROPERTY' | 'PARTNERSHIPS'| 'PRIVACY_POLICY' | 'LGPD' | 'OTHERS'
 }
 
 const contactUsSchema = new Schema<IContactUs>({
