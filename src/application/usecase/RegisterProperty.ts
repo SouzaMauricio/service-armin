@@ -161,28 +161,26 @@ export class RegisterProperty {
   validateReleaseTypeProperty (body: any): null | HttpResponse {
     // required fields
     const requiredSimpleFields = [
-      'propertyArea',
       'user',
-      'toSell',
       'show',
       'condominium',
-      'price',
       'localization',
       'environments',
-      'pictures'
+      'release'
     ]
     const keys = Object.keys(body)
     for (const field of requiredSimpleFields) {
       if (keys.includes(field)) continue
       return badRequest(new MissingParamError(field))
     }
-    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new MissingParamError('price.sale'))
     // invalid fields
     if (body.floor) badRequest(new InvalidParamError('floor'))
     if (body.views) badRequest(new InvalidParamError('views'))
-    if (body.landArea) badRequest(new InvalidParamError('views'))
+    if (body.landArea) badRequest(new InvalidParamError('landArea'))
+    if (body.propertyArea) badRequest(new InvalidParamError('propertyArea'))
     if (body.toRent) badRequest(new InvalidParamError('toRent'))
-    if (body.price.rent) badRequest(new InvalidParamError('price.rent'))
+    if (body.toSell) badRequest(new InvalidParamError('toRent'))
+    if (body.price) badRequest(new InvalidParamError('price'))
     return null
   }
 }
