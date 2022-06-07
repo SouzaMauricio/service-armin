@@ -12,13 +12,14 @@ export class GetAllContactUs {
   async execute (queryStringParams: any): Promise<HttpResponse> {
     try {
       const {
-        name = null,
+        fullName = null,
         email = null,
         type = null
       } = queryStringParams
       const query: any = {}
-      if (name) {
-        query.name = name
+      if (fullName) {
+        const regex = new RegExp(fullName, 'ig')
+        query.fullName = regex
       }
       if (email) {
         query.email = email

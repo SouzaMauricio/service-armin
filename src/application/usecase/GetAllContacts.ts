@@ -12,15 +12,20 @@ export class GetAllContacts {
   async execute (queryStringParams: any): Promise<HttpResponse> {
     try {
       const {
-        name = null,
-        email = null
+        fullName = null,
+        email = null,
+        property = null
       } = queryStringParams
       const query: any = {}
-      if (name) {
-        query.name = name
+      if (fullName) {
+        const regex = new RegExp(fullName, 'ig')
+        query.fullName = regex
       }
       if (email) {
         query.email = email
+      }
+      if (property) {
+        query.property = property
       }
       const response = await this.contactDAO.find(query, queryStringParams)
       return ok(response)
