@@ -16,14 +16,14 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  methods: ['GET', 'POST', 'PATCH']
+  methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 
 const routes = express()
 
 routes.use(cors(corsOptions))
 routes.use(bodyParser.urlencoded({ extended: false }))
-routes.use(bodyParser.json({ limit: '20mb' }))
+routes.use(bodyParser.json({ limit: '5mb' }))
 
 routes.use(Property.routes)
 routes.use(Login.routes)

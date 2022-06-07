@@ -11,11 +11,7 @@ routes.route('/properties')
   .post(validateToken, async (req: Request, res: Response, next: any) => {
     const registerPropertyController = new RegisterPropertyController()
     const response = await registerPropertyController.handler(req.body)
-    if (response.statusCode !== 200) {
-      res.status(response.statusCode).json(response.body)
-    } else {
-      res.status(response.statusCode).send(response.body)
-    }
+    res.status(response.statusCode).json(response.body)
   })
   .get(checkTokenProvider, async (req: Request, res: Response, next: any) => {
     const getAllPropertiesController = new GetAllPropertiesController()
