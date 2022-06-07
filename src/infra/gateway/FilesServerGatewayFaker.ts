@@ -6,4 +6,9 @@ export class FilesServerGatewayFaker implements IFilesServer {
       'test'
     ))
   }
+
+  async deleteFile (body: any): Promise<void> {
+    return await new Promise((resolve, reject) => resolve(
+    ))
+  }
 }
