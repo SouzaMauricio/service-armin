@@ -54,7 +54,7 @@ export class UpdateProperty {
       if (!keys.includes(field)) continue
       return badRequest(new InvalidParamError(field))
     }
-    if (body.toRent && (!body.price || body.price.rent)) return badRequest(new InvalidParamError('price.rent'))
+    if (body.toRent && (!body.price || !body.price.rent)) return badRequest(new InvalidParamError('price.rent'))
     if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new InvalidParamError('price.sale'))
     return null
   }
