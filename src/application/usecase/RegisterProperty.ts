@@ -179,7 +179,7 @@ export class RegisterProperty {
     if (body.landArea) badRequest(new InvalidParamError('landArea'))
     if (body.propertyArea) badRequest(new InvalidParamError('propertyArea'))
     if (body.toRent) badRequest(new InvalidParamError('toRent'))
-    if (body.toSell) badRequest(new InvalidParamError('toRent'))
+    if (body.toSell) badRequest(new InvalidParamError('toSell'))
     if (body.price) badRequest(new InvalidParamError('price'))
     return null
   }

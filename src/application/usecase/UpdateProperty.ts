@@ -100,21 +100,20 @@ export class UpdateProperty {
 
   validateReleaseTypeProperty (body: any): null | HttpResponse {
     const invalidFields = [
-      'release',
       'floor',
       'views',
-      'toRent',
       'id',
       'cod',
-      'type'
+      'type',
+      'price'
     ]
     const keys = Object.keys(body)
     for (const field of invalidFields) {
       if (!keys.includes(field)) continue
       return badRequest(new InvalidParamError(field))
     }
-    if (body.price && body.price.rent) return badRequest(new InvalidParamError('price.rent'))
-    if (body.toSell && (!body.price || !body.price.sale)) return badRequest(new InvalidParamError('price.sale'))
+    if (body.toRent) return badRequest(new InvalidParamError('price.toRent'))
+    if (body.toSell) return badRequest(new InvalidParamError('price.toSell'))
     return null
   }
 }

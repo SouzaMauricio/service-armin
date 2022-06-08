@@ -1,4 +1,4 @@
 export interface IFilesServer {
-  uploadPropertyPictureFile: (file: any, newName: string) => Promise<any>
+  uploadFiles: (file: any, newName: string, path: string) => Promise<any>
   deleteFile: (key: string) => Promise<void>
 }

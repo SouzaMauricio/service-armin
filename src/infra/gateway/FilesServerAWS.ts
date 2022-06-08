@@ -9,11 +9,10 @@ export class FilesServerFilesServerAWSGateway implements IFilesServer {
     AWS.config.update({ region: process.env.AWS_REGION })
   }
 
-  async uploadPropertyPictureFile (body: any, fileName: string): Promise<any> {
+  async uploadFiles (body: any, fileName: string, serverPath: string): Promise<any> {
     const fileContent = fs.readFileSync(body.image.path)
     const s3 = new AWS.S3()
-    const path = 'properties/'
-    const key = `${path}${String(fileName)}`
+    const key = `${serverPath}${String(fileName)}`
     const s3Params = {
       Bucket: String(process.env.AWS_BUCKET_PICTURES),
       Key: key,
@@ -23,7 +22,7 @@ export class FilesServerFilesServerAWSGateway implements IFilesServer {
     }
     await s3.putObject(s3Params).promise()
     return {
-      path: `${String(process.env.AWS_BUCKET_URL)}${path}${fileName}`,
+      path: `${String(process.env.AWS_BUCKET_URL)}${serverPath}${fileName}`,
       key
     }
   }

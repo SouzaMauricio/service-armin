@@ -4,7 +4,7 @@ import { IFilesServer } from '../../domain/infra/gateway/IFilesServer'
 import { ok, serverError } from '../../presentation/helpers/http-helper'
 import { HttpResponse } from '../../presentation/protocols'
 
-export class UploadPictures {
+export class UploadUnitImage {
   private readonly uploadDAO: IUploadDAO
   private readonly propertyDAO: IPropertyDAO
   private readonly filesServerGateway: IFilesServer
@@ -17,16 +17,17 @@ export class UploadPictures {
 
   async execute (body: any): Promise<HttpResponse> {
     try {
-      const newFileName = this.getNewFileName(body.fileType, body.propertyId)
-      const { path, key } = await this.filesServerGateway.uploadFiles(body, newFileName, 'properties/')
+      const newFileName = this.getNewFileName(body.fileType, body.propertyId, body.tempId)
+      const { path, key } = await this.filesServerGateway.uploadFiles(body, newFileName, 'properties/units/')
       const newUpload = {
         originalName: body.fileName,
         fullPath: path,
         key
       }
       const upload = await this.uploadDAO.create(newUpload)
-      await this.propertyDAO.pushNewPicture(
+      await this.propertyDAO.addNewUnitImage(
         body.propertyId,
+        body.tempId,
         {
           uploadId: upload.id,
           fullPath: path
@@ -39,9 +40,8 @@ export class UploadPictures {
     }
   }
 
-  getNewFileName (extension: string, propertyId: string): string {
-    const randomPrefix = Math.floor(Math.random() * 100 * 100)
+  getNewFileName (extension: string, propertyId: string, tempId: number): string {
     const dateToNameFile = new Date().toJSON().slice(0, 10).toString()
-    return `${propertyId}-${dateToNameFile}-${randomPrefix.toString()}.${extension}`
+    return `${propertyId}-${tempId.toString()}-${dateToNameFile}.${extension}`
   }
 }

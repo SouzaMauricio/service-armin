@@ -16,17 +16,18 @@ interface IRelease {
   expectedDate: string
   units: [
     {
-      title: string
-      bedroom: number[]
-      balcony: number[]
-      livingroom: number[]
-      garages: number[]
-      suites: number[]
-      bathrooms: number[]
-      images?: [{
+      tempId: number
+      area: number
+      bedroom: number
+      balcony?: number
+      livingroom?: number
+      garages?: number
+      suites?: number
+      bathrooms: number
+      image: {
         uploadId: string
         image: string
-      }]
+      }
     }
   ]
 }
@@ -49,7 +50,7 @@ interface IProperty extends Document {
   floor?: number
   toRent: boolean
   toSell: boolean
-  propertyArea: number
+  propertyArea?: number
   landArea?: number
   pictures?: object[]
   localization: {
@@ -70,9 +71,9 @@ interface IProperty extends Document {
     livingroom: number[]
     balcony: number[]
   }
-  release: IRelease
+  release?: IRelease
   keywords: string[]
-  condominium: ICondominium
+  condominium?: ICondominium
   views: [{
     count: number
     date: string
@@ -100,50 +101,52 @@ const releaseSchema = new Schema<IRelease>({
   units: {
     type: [
       {
-        title: {
-          type: String,
+        tempId: {
+          type: Number,
+          required: true
+        },
+        area: {
+          type: Number,
           required: true
         },
         bedroom: {
-          type: [Number],
+          type: Number,
           required: true
         },
         balcony: {
-          type: [Number],
-          required: true
+          type: Number,
+          required: false
         },
         livingroom: {
-          type: [Number],
-          required: true
+          type: Number,
+          required: false
         },
         garages: {
-          type: [Number],
-          required: true
+          type: Number,
+          required: false
         },
         suites: {
-          type: [Number],
-          required: true
+          type: Number,
+          required: false
         },
         bathrooms: {
-          type: [Number],
+          type: Number,
           required: true
         },
-        images: {
-          type: [{
-            uploadId: {
-              type: String,
-              required: true
-            },
-            fullPath: {
-              type: String,
-              require: true
-            }
-          }]
+        image: {
+          uploadId: {
+            type: String,
+            required: false
+          },
+          fullPath: {
+            type: String,
+            require: false
+          }
         }
       }
     ]
   }
-})
+}, { _id: false })
 
 const condominiumSchema = new Schema<ICondominium>({
   price: {
@@ -168,7 +171,7 @@ const condominiumSchema = new Schema<ICondominium>({
       }
     ]
   }
-})
+}, { _id: false })
 
 const nearbySchema = new Schema<INearby>({
   title: {
@@ -183,7 +186,7 @@ const nearbySchema = new Schema<INearby>({
     type: String,
     required: true
   }
-})
+}, { _id: false })
 
 const propertySchema = new Schema<IProperty>({
   cod: {

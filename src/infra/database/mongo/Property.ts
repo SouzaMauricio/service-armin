@@ -128,4 +128,23 @@ export class PropertyDAOMongo implements IPropertyDAO {
       await connection.closeConnection()
     }
   }
+
+  async addNewUnitImage (propertyId: string, unitTempId: number, body: any): Promise<void> {
+    const connection = new Connection()
+    try {
+      await connection.createConnection()
+      await PropertyModel.updateOne(
+        {
+          _id: propertyId,
+          'release.units.tempId': unitTempId
+        },
+        { $set: { 'release.units.$.image': body } }
+      )
+    } catch (error) {
+      console.error('Error: ', error)
+      throw error
+    } finally {
+      await connection.closeConnection()
+    }
+  }
 }
