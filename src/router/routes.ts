@@ -7,15 +7,15 @@ import * as ContactUs from './contactUs'
 import * as Upload from './upload'
 import cors from 'cors'
 
-const whitelist = process.env.WHITE_LIST!.toString().split(',')
+// const whitelist = process.env.WHITE_LIST!.toString().split(',')
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
+  // origin: function (origin, callback) {
+  //   if (!origin || whitelist.includes(origin)) {
+  //     callback(null, true)
+  //   } else {
+  //     callback(new Error('Not allowed by CORS'))
+  //   }
+  // },
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 
