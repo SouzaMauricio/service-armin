@@ -1,14 +1,14 @@
-import AWS from 'aws-sdk'
+// import AWS from 'aws-sdk'
 import S3 from 'aws-sdk/clients/s3'
 import { IFilesServer } from '../../domain/infra/gateway/IFilesServer'
 import fs from 'fs'
 
 export class FilesServerFilesServerAWSGateway implements IFilesServer {
-  constructor () {
-    const credentials = new AWS.SharedIniFileCredentials()
-    AWS.config.credentials = credentials
-    AWS.config.update({ region: process.env.AWS_REGION })
-  }
+  // constructor () {
+  // const credentials = new AWS.SharedIniFileCredentials()
+  // AWS.config.credentials = credentials
+  // AWS.config.update({ region: process.env.AWS_REGION })
+  // }
 
   async uploadFiles (body: any, fileName: string, serverPath: string): Promise<any> {
     const fileContent = fs.readFileSync(body.image.path)
