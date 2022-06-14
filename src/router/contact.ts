@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express'
 import { MakeAContactController } from '../presentation/controllers/MakeAContact'
 import { GetAllContactsController } from '../presentation/controllers/GetAllContacts'
-import { validateToken, checkTokenProvider } from './verifyToken'
+import { checkTokenProvider } from './verifyToken'
 
 const routes = express()
 
 routes.route('/contacts')
-  .post(validateToken, async (req: Request, res: Response, next: any) => {
+  .post(checkTokenProvider, async (req: Request, res: Response, next: any) => {
     const makeAContactController = new MakeAContactController()
     const response = await makeAContactController.handler(req.body)
     res.status(response.statusCode).send(response.body)
