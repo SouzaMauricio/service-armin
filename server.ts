@@ -3,6 +3,7 @@ import { routes } from './src/router/routes'
 import formData from 'express-form-data'
 import morgan from 'morgan'
 import os from 'os'
+import partialResponse from 'express-partial-response'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -11,6 +12,7 @@ const options = {
   autoClean: true
 }
 
+app.use(partialResponse())
 app.use(formData.parse(options))
 app.use(formData.format())
 app.use(formData.stream())
