@@ -8,6 +8,12 @@ services:
     networks:
       armin:
         ipv4_address: 192.168.1.3
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${ARMIN_MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${ARMIN_MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${ARMIN_MONGO_INITDB_DATABASE}
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
 
   service_armin:
     build:
@@ -23,6 +29,19 @@ services:
     volumes:
       - .:/var/www
       - ~/.aws:/root/.aws
+    # environment:
+      # - ARMIN_PORT=${ARMIN_PORT}
+      # - ARMIN_APP_NAME=${ARMIN_APP_NAME}
+      # - ARMINARMIN_SECRET_TOKEN_PORT=${ARMIN_SECRET_TOKEN}
+      # - ARMIN_MONGO_URI=${ARMIN_MONGO_URI}
+      # - ARMIN_WHITE_LIST=${ARMIN_WHITE_LIST}
+      # - ARMIN_EMAIL_SERVER=${ARMIN_EMAIL_SERVER}
+      # - ARMIN_EMAIL_SERVER_PORT=${ARMIN_EMAIL_SERVER_PORT}
+      # - ARMIN_EMAIL_CRYPTOGRAPHY=${ARMIN_EMAIL_CRYPTOGRAPHY}
+      # - ARMIN_EMAIL=${ARMIN_EMAIL}
+      # - ARMIN_EMAIL_PASS=${ARMIN_EMAIL_PASS}
+      # - ARMIN_AWS_BUCKET_PICTURES=${ARMIN_AWS_BUCKET_PICTURES}
+      # - ARMIN_AWS_BUCKET_URL=${ARMIN_AWS_BUCKET_URL}
 
 networks:
   armin:
