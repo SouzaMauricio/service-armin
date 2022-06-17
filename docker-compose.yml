@@ -20,7 +20,7 @@ services:
       dockerfile: ./dockerfiles/node.dockerfile
       context: .
     image: node:14
-    container_name: servicer_armin
+    container_name: service_armin
     ports:
       - "3003:3003"
     networks:

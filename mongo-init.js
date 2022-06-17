@@ -3,8 +3,8 @@ db.createUser({
   pwd: process.env.ARMIN_MONGO_INITDB_ROOT_PASSWORD,
   roles: [
     {
-      role: 'dbOwner',
-      db: 'application_database'
+      role: 'readWrite',
+      db: process.env.ARMIN_MONGO_INITDB_DATABASE
     }
   ]
 })
