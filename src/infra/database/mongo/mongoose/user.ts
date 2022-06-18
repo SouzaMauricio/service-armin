@@ -25,7 +25,13 @@ const userSchema = new Schema<IUser>({
   },
   document: {
     type: String,
-    required: true
+    required: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
   },
   brokerName: {
     type: [String],

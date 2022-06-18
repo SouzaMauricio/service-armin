@@ -4,13 +4,13 @@ import { TokenManagerService } from '../../application/services/TokenManager'
 import { ManagerPassword } from '../../application/services/PasswordManager'
 
 export class AuthenticateUserController {
-  async handler (queryParams: any): Promise<any> {
+  async handler (body: any): Promise<any> {
     const authenticateUser = new AuthenticateUser(
       new UserDAOMongo(),
       new TokenManagerService(),
       new ManagerPassword()
     )
-    const response = await authenticateUser.execute(queryParams)
+    const response = await authenticateUser.execute(body)
     return response
   }
 }
