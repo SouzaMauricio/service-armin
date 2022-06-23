@@ -72,6 +72,60 @@ export class PropertyDAOMongo implements IPropertyDAO {
     const connection = new Connection()
     const options = this.optionsPaginate.getOptionsPaginate(queryStringParams)
     try {
+      if (query.bedrooms) {
+        query.$and = query.$and ? query.$and : []
+        const bedrooms = query.bedrooms >= 4 ? { $gte: query.bedrooms } : query.bedrooms
+        query.$and.push(
+          {
+            $or: [
+              {
+                'environments.bedroom': bedrooms
+              },
+              {
+                'release.units.bedroom': bedrooms
+              }
+            ]
+          }
+        )
+        delete query.bedrooms
+      }
+      if (query.garages) {
+        query.$and = query.$and ? query.$and : []
+        const garages = query.garages >= 4 ? { $gte: query.garages } : query.garages
+        query.$and.push(
+          {
+            $or: [
+              {
+                'environments.garages': garages
+              },
+              {
+                'release.units.garages': garages
+              }
+            ]
+          }
+        )
+        delete query.garages
+      }
+      if (query.minValue && query.toRent) {
+        query['price.rent'] = { $gte: query.minValue }
+        delete query.minValue
+      } else if (query.minValue && query.toSell) {
+        query['price.sale'] = { $gte: query.minValue }
+        delete query.minValue
+      }
+      if (query.maxValue && query.toRent) {
+        query['price.rent'] = query['price.rent'] ? { ...query['price.rent'], $lte: query.maxValue } : { $lte: query.maxValue }
+        delete query.maxValue
+      } else if (query.maxValue && query.toSell) {
+        query['price.sale'] = query['price.sale'] ? { ...query['price.sale'], $lte: query.maxValue } : { $lte: query.maxValue }
+        delete query.maxValue
+      }
+      if (query.search) {
+        const regex = new RegExp(query.search, 'ig')
+        query.keywords = { $regex: regex }
+        delete query.search
+      }
+      console.log('===query===', query)
       await connection.createConnection()
       const response = await PropertyModel.paginate(query, options)
       return response
