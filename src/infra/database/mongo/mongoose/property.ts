@@ -151,7 +151,7 @@ const releaseSchema = new Schema<IRelease>({
 const condominiumSchema = new Schema<ICondominium>({
   price: {
     type: Number,
-    required: true
+    required: false
   },
   name: {
     type: String,
