@@ -4,9 +4,11 @@ import formData from 'express-form-data'
 import morgan from 'morgan'
 import os from 'os'
 import partialResponse from 'express-partial-response'
+import https from 'https'
+import http from 'http'
+import fs from 'fs'
 
 const app: Express = express()
-const port = process.env.PORT
 const options = {
   uploadDir: os.tmpdir(),
   autoClean: true
@@ -20,6 +22,20 @@ app.use(formData.union())
 app.use(morgan(':method :url :status :res[content-length] - :remote-addr - :response-time ms'))
 app.use(routes)
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${String(port)}`)
-})
+const port = process.env.PORT
+// app.listen(port, () => {
+//   console.log(`⚡️[server]: Server is running at http://localhost:${String(port)}`)
+// })
+
+// SSL
+let optionsSSL = {}
+try {
+  optionsSSL = {
+    key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+    cert: fs.readFileSync('test/fixtures/keys/agent2-cert.cert')
+  }
+} catch (e) {
+}
+
+http.createServer(app).listen(port)
+https.createServer(optionsSSL, app).listen(443)
