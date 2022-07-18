@@ -45,7 +45,7 @@ export class PropertyDAOMongo implements IPropertyDAO {
       const response = await PropertyModel.findOne<any>({ cod: propertyCod })
         .select('type')
         .lean()
-      return response?.type
+      return response ? response.type : null
     } catch (error) {
       console.error('Error: ', error)
       throw error

@@ -41,6 +41,7 @@ try {
     ca: ca
   }
 } catch (e) {
+  console.log('ERROR: ', e)
 }
 
 http.createServer(app).listen(port)
