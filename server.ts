@@ -28,14 +28,20 @@ const port = process.env.PORT
 // })
 
 // SSL
-let optionsSSL = {}
+let credentials = {}
+
 try {
-  optionsSSL = {
-    key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
-    cert: fs.readFileSync('test/fixtures/keys/agent2-cert.cert')
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8')
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8')
+  const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8')
+
+  credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
   }
 } catch (e) {
 }
 
 http.createServer(app).listen(port)
-https.createServer(optionsSSL, app).listen(443)
+https.createServer(credentials, app).listen(443)
